@@ -1,11 +1,11 @@
+import vitest from "vitest";
 export type Class<T> = { new (...args: any[]): T };
 
 type FunctionType = (...args: any[]) => any;
 type FunctionReturnType<T> = T extends FunctionType ? ReturnType<T> : never;
 type FunctionParametersType<T> = T extends FunctionType ? Parameters<T> : never;
 type VitestMockType<T> = vitest.Mock<
-  FunctionReturnType<T>,
-  FunctionParametersType<T>
+  (...args: FunctionParametersType<T>) => FunctionReturnType<T>
 >;
 
 export type Mock<T> = T & {
