@@ -1,12 +1,7 @@
 <h1>ts-vitest-mocker</h1>
 
-Powerful, lightweight, TypeScript-friendly and 100% [Jest](https://github.com/facebook/jest#readme) API compatible library
+Powerful, lightweight, TypeScript-friendly and 100% [Vitest](https://vitest.dev/) API compatible library
 which simplifies classes and interfaces mocking.
-
-[![npm version](https://badge.fury.io/js/ts-vitest-mocker.svg)](https://badge.fury.io/js/ts-vitest-mocker)
-[![Build](https://github.com/dariosn85/ts-vitest-mocker/actions/workflows/build.yml/badge.svg)](https://github.com/dariosn85/ts-vitest-mocker/actions/workflows/build.yml)
-[![Tests](https://github.com/dariosn85/ts-vitest-mocker/actions/workflows/test.yml/badge.svg)](https://github.com/dariosn85/ts-vitest-mocker/actions/workflows/test.yml)
-[![Publish](https://github.com/dariosn85/ts-vitest-mocker/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/dariosn85/ts-vitest-mocker/actions/workflows/npm-publish.yml)
 
 ---
 
@@ -17,7 +12,7 @@ which simplifies classes and interfaces mocking.
   - [Mocking interfaces](#mocking-interfaces)
 - [More advanced example](#more-advanced-example)
 - [Configuring ts-vitest-mocker](#configuring-ts-vitest-mocker)
-- [Jest API compatibility](#jest-api-compatibility)
+- [Vitest API compatibility](#vitest-api-compatibility)
 - [Why to use ts-vitest-mocker](#why-to-use-ts-vitest-mocker)
 - [Notes](#notes)
   - [ts-vitest-mocker with RxJS](#ts-vitest-mocker-with-rxjs)
@@ -109,7 +104,7 @@ export class UsersService {
 
 Now let's create file `users-service.test.ts` and write some unit tests using ts-vitest-mocker.
 We will mock `UsersRepository` using `mock()` function. All repository methods will be mocked
-automatically using `jest.fn()` internally and all type-checking will work out-of-the-box.
+automatically using `vi.fn()` internally and all type-checking will work out-of-the-box.
 
 `users-service.test.ts` file:
 
@@ -158,35 +153,6 @@ mock(MyClass, {
 });
 ```
 
-#### Global config
-
-In order for configuration to be properly passed to test environments, you can define `ts-vitest-mocker.setup.ts` configuration file
-and specify it in [setupFiles array](https://jestjs.io/docs/configuration#setupfiles-array) in
-[Jest configuration](https://jestjs.io/docs/configuration).
-
-##### ts-vitest-mocker.setup.ts
-
-```typescript
-import { TsJestMocker } from "ts-vitest-mocker";
-
-TsJestMocker.setConfig({
-  failIfMockNotProvided: false,
-});
-```
-
-##### jest.config.ts
-
-```typescript
-import type { Config } from "jest";
-
-const config: Config = {
-  verbose: true,
-  setupFiles: ["./ts-vitest-mocker.setup.ts"],
-};
-
-export default config;
-```
-
 ### Configuration options
 
 #### excludeMethodNames
@@ -207,7 +173,7 @@ const mock = mock(MyClass, {
 
 ```typescript
 // global config
-TsJestMocker.setConfig({
+TsVitestMocker.setConfig({
   excludeMethodNames: ["schedule", "then"],
 });
 ```
@@ -231,7 +197,7 @@ const mock = mock({
 
 ```typescript
 // global config
-TsJestMocker.setConfig({
+TsVitestMocker.setConfig({
   includeMethodNames: ["then"],
 });
 ```
@@ -255,24 +221,24 @@ const mock = mock({
 
 ```typescript
 // global config
-TsJestMocker.setConfig({
+TsVitestMocker.setConfig({
   failIfMockNotProvided: false,
 });
 ```
 
-## Jest API compatibility
+## Vitest API compatibility
 
-ts-vitest-mocker is not an alternative to Jest and does not provide an alternative API. It is utility
-which main purpose is to add additional capability on top of Jest to simplify writing mocks and
+ts-vitest-mocker is not an alternative to Vitest and does not provide an alternative API. It is utility
+which main purpose is to add additional capability on top of Vitest to simplify writing mocks and
 keep all the benefits of data types.
 
 While using ts-vitest-mocker you don't need to use any custom calls to reset mock or anything.
-You call for example `jest.resetAllMocks()` as you usually do.
+You call for example `vitest.resetAllMocks()` as you usually do.
 
 ## Why to use ts-vitest-mocker?
 
-Do you often catch yourself writing mocks manually using `jest.fn()`? Do you maybe omit defining
-`jest.Mock` type generics and implicitly end up using `any`, or what's worse, you need to explicitly
+Do you often catch yourself writing mocks manually using `vi.fn()`? Do you maybe omit defining
+`vitest.Mock` type generics and implicitly end up using `any`, or what's worse, you need to explicitly
 convert your mocks to `any` to be able to use them with classes under test? It is hard to do refactoring
 and keeping unit tests up-to-date?
 
@@ -282,18 +248,18 @@ The above :point_up_2: sounds familiar to you? Stop doing that! ts-vitest-mocker
 
 ```typescript
 const mockUserRepository = {
-  yourMethod1: jest.fn(),
-  yourMethod2: jest.fn(),
-  yourMethod3: jest.fn(),
-  yourMethod4: jest.fn(),
-  yourMethod5: jest.fn(),
-  yourMethod6: jest.fn(),
+  yourMethod1: vi.fn(),
+  yourMethod2: vi.fn(),
+  yourMethod3: vi.fn(),
+  yourMethod4: vi.fn(),
+  yourMethod5: vi.fn(),
+  yourMethod6: vi.fn(),
 
   // ...
 
   // ❌️ you have to mock all the methods
   // so mock and UsersRepository are compatible?
-  yourMethod20: jest.fn(),
+  yourMethod20: vi.fn(),
 };
 
 const userService = new UserService(mockUserRepository);
@@ -301,8 +267,8 @@ const userService = new UserService(mockUserRepository);
 
 ```typescript
 const mockUserRepository = {
-  yourMethod1: jest.fn(),
-  yourMethod2: jest.fn(),
+  yourMethod1: vi.fn(),
+  yourMethod2: vi.fn(),
 } as any;
 // ❌ you mock only what you need and then cast explicitly to any
 // and loose benefits from compilation phase?
@@ -312,10 +278,10 @@ const userService = new UserService(mockUserRepository);
 
 ```typescript
 const mockUserRepository = {
-  yourMethod1: jest.fn(),
+  yourMethod1: vi.fn(),
 };
 
-// ❌️ You often skip specifying mock types like jest.fn<User, [User]>() and
+// ❌️ You often skip specifying mock types like vi.fn<User, [User]>() and
 // then need to check over and over again in the code what actually
 // mocked methods should return?
 mockUserRepository.yourMethod1.mockReturnedValue({
