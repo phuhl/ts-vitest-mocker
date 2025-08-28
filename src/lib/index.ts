@@ -1,7 +1,7 @@
 import { createClassProxy } from "./proxy-class";
 import { Mock, MockConfig } from "./types";
 import { createGenericProxy } from "./proxy-generic";
-import { TsJestMocker } from "./config";
+import { TsVitestMocker } from "./config";
 
 export function mock<T>(
   clazz?: { new (...args: any[]): T },
@@ -17,7 +17,7 @@ export function mock<T>(
   }
 
   const isFirstParameterMockConfig =
-    TsJestMocker.isTsJestMockerConfig(clazzOrMockConfig);
+    TsVitestMocker.isTsVitestMockerConfig(clazzOrMockConfig);
 
   if (isFirstParameterMockConfig) {
     return createGenericProxy(clazzOrMockConfig);
@@ -26,4 +26,4 @@ export function mock<T>(
   return createClassProxy<T>(clazzOrMockConfig, mockConfig);
 }
 
-export { Mock, MockConfig, TsJestMocker } from "./types";
+export { Mock, MockConfig, TsVitestMocker } from "./types";

@@ -26,7 +26,7 @@ export const createClassProxy = <T>(
         functions.has(property as string) &&
         !FunctionsFilter.shouldFilter(property as string, config)
       ) {
-        target[property] = jest.fn();
+        target[property] = vitest.fn();
 
         if (config.failIfMockNotProvided) {
           target[property].mockImplementation(() => {

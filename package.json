@@ -1,14 +1,14 @@
 {
   "name": "ts-vitest-mocker",
   "version": "1.3.0",
-  "description": "Powerful, lightweight and TypeScript friendly library that extends Jest with capability of mocking classes and interfaces.",
+  "description": "Powerful, lightweight and TypeScript friendly library that extends Vitest with capability of mocking classes and interfaces.",
   "publishConfig": {
     "access": "public"
   },
   "main": "lib/lib/index.js",
   "typings": "lib/lib/index.d.ts",
   "scripts": {
-    "test": "jest",
+    "test": "vitest --globals",
     "build": "rimraf ./lib && tsc",
     "format:check": "prettier . --check",
     "format": "prettier . --write"
@@ -18,7 +18,7 @@
     "url": "git+https://github.com/dariosn85/ts-vitest-mocker.git"
   },
   "keywords": [
-    "jest",
+    "vitest",
     "typescript",
     "mock",
     "class",
@@ -35,13 +35,11 @@
   "devDependencies": {
     "prettier": "^3.2.4",
     "rimraf": "^3.0.2",
-    "ts-jest": "^29.2.6",
     "ts-node": "^10.9.2",
     "typescript": "^4.7.4"
   },
   "dependencies": {
-    "@types/jest": "^28.1.7 || ^29.5.14",
-    "jest": "^28.1.3 || ^29.0.0"
+    "vitest": "^3.2.4"
   },
   "files": [
     "lib/lib/*"

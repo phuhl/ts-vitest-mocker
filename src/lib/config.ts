@@ -23,8 +23,8 @@ export interface MergedConfig {
   failIfMockNotProvided: boolean;
 }
 
-export interface GlobalTsJestMocker {
-  tsJestMockerConfig?: MockConfig;
+export interface GlobalTsVitestMocker {
+  tsVitestMockerConfig?: MockConfig;
 }
 
 export namespace MergedConfig {
@@ -35,7 +35,7 @@ export namespace MergedConfig {
     defaultConfig: Required<MockConfig>,
     localConfig?: MockConfig,
   ): MergedConfig {
-    const globalConfig = TsJestMocker.getConfig();
+    const globalConfig = TsVitestMocker.getConfig();
 
     const excludeMethodNames = [
       ...defaultConfig.excludeMethodNames,
@@ -65,27 +65,27 @@ export type RequireAtLeastOne<T> = {
   [K in keyof T]-?: Required<Pick<T, K>> & Partial<Omit<T, K>>;
 }[keyof T];
 
-export namespace TsJestMocker {
+export namespace TsVitestMocker {
   /**
    * Sets global {@link MockConfig}.
    *
-   * @param config The TS Jest Mocker configuration that will be used for all mocks by default.
+   * @param config The TS Vitest Mocker configuration that will be used for all mocks by default.
    */
   export function setConfig(config: MockConfig | undefined): void {
-    (global as GlobalTsJestMocker).tsJestMockerConfig = config;
+    (global as GlobalTsVitestMocker).tsVitestMockerConfig = config;
   }
 
   /**
    * Gets global {@link MockConfig}.
    */
   export function getConfig(): MockConfig | undefined {
-    return (global as GlobalTsJestMocker).tsJestMockerConfig;
+    return (global as GlobalTsVitestMocker).tsVitestMockerConfig;
   }
 
   /**
    * Type Guard to check whether specified Object is {@link MockConfig}.
    */
-  export function isTsJestMockerConfig(
+  export function isTsVitestMockerConfig(
     obj: Record<any, any>,
   ): obj is MockConfig {
     if (!obj) {

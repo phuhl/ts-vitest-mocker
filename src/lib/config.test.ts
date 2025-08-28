@@ -1,4 +1,4 @@
-import { TsJestMocker } from "./config";
+import { TsVitestMocker } from "./config";
 import { mock } from "./index";
 
 interface TestInterface {
@@ -11,12 +11,12 @@ interface TestInterface {
 
 describe("Config", () => {
   beforeEach(() => {
-    TsJestMocker.setConfig(undefined);
+    TsVitestMocker.setConfig(undefined);
   });
 
   it("should use global config", async () => {
     // GIVEN
-    TsJestMocker.setConfig({
+    TsVitestMocker.setConfig({
       failIfMockNotProvided: true,
       excludeMethodNames: ["method2"],
     });
@@ -32,7 +32,7 @@ describe("Config", () => {
 
   it("should use default config values even if global config is defined", async () => {
     // GIVEN
-    TsJestMocker.setConfig({
+    TsVitestMocker.setConfig({
       failIfMockNotProvided: true,
       excludeMethodNames: ["method2"],
     });
@@ -48,7 +48,7 @@ describe("Config", () => {
 
   it("should override default config with global config", async () => {
     // GIVEN
-    TsJestMocker.setConfig({
+    TsVitestMocker.setConfig({
       failIfMockNotProvided: true,
       includeMethodNames: ["then"],
     });
@@ -67,7 +67,7 @@ describe("Config", () => {
 
   it("should use local config over global config", async () => {
     // GIVEN
-    TsJestMocker.setConfig({
+    TsVitestMocker.setConfig({
       failIfMockNotProvided: true,
       includeMethodNames: ["then"],
     });
@@ -86,7 +86,7 @@ describe("Config", () => {
     expect(testMock.then).toHaveReturnedWith(15);
   });
 
-  describe("isTsJestMockerConfig", () => {
+  describe("isTsVitestMockerConfig", () => {
     it("should recognize config", async () => {
       // GIVEN
       const config = {
@@ -94,7 +94,7 @@ describe("Config", () => {
       };
 
       // WHEN
-      const isConfig = TsJestMocker.isTsJestMockerConfig(config);
+      const isConfig = TsVitestMocker.isTsVitestMockerConfig(config);
 
       // THEN
       expect(isConfig).toBeTruthy();
@@ -105,7 +105,7 @@ describe("Config", () => {
       const config = {};
 
       // WHEN
-      const isConfig = TsJestMocker.isTsJestMockerConfig(config);
+      const isConfig = TsVitestMocker.isTsVitestMockerConfig(config);
 
       // THEN
       expect(isConfig).toBeFalsy();
@@ -118,7 +118,7 @@ describe("Config", () => {
       };
 
       // WHEN
-      const isConfig = TsJestMocker.isTsJestMockerConfig(config);
+      const isConfig = TsVitestMocker.isTsVitestMockerConfig(config);
 
       // THEN
       expect(isConfig).toBeFalsy();

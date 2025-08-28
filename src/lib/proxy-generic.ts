@@ -8,7 +8,7 @@ const defaultConfig: Required<MockConfig> = {
     // "promises will and should assimilate anything with a then method". See https://promisesaplus.com/#point-53 for more details.
     "then",
 
-    // for .toEqual() to work (Jest)
+    // for .toEqual() to work (Vitest)
     Symbol.iterator,
   ],
   failIfMockNotProvided: true,
@@ -25,7 +25,7 @@ export const createGenericProxy = <T>(mockConfig?: MockConfig): Mock<T> => {
       }
 
       if (!FunctionsFilter.shouldFilter(property as string, config)) {
-        target[property] = jest.fn();
+        target[property] = vitest.fn();
 
         if (config.failIfMockNotProvided) {
           target[property].mockImplementation(() => {
