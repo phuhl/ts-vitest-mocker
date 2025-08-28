@@ -1,4 +1,4 @@
-import vitest from "vitest";
+import * as vitest from "vitest";
 export type Class<T> = { new (...args: any[]): T };
 
 type FunctionType = (...args: any[]) => any;
