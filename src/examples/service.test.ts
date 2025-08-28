@@ -1,25 +1,25 @@
-import { Service } from './app/service';
-import { mock, Mock } from '../lib';
-import { IRepository } from './app/repository';
+import { Service } from "./app/service";
+import { mock, Mock } from "../lib";
+import { IRepository } from "./app/repository";
 
-describe('Class', () => {
-    let service: Service;
-    let repositoryMock: Mock<IRepository>;
+describe("Class", () => {
+  let service: Service;
+  let repositoryMock: Mock<IRepository>;
 
-    beforeEach(() => {
-        repositoryMock = mock<IRepository>();
-        repositoryMock.getBoolean.mockReturnValue(true);
+  beforeEach(() => {
+    repositoryMock = mock<IRepository>();
+    repositoryMock.getBoolean.mockReturnValue(true);
 
-        service = new Service(repositoryMock);
-    });
+    service = new Service(repositoryMock);
+  });
 
-    it('should do something', async () => {
-        // repositoryMock.isInitialized.mockResolvedValueOnce('test'); // compilation error
-        // repositoryMock.isInitialized.mockResolvedValueOnce(1); // compilation error
-        repositoryMock.isInitialized.mockResolvedValueOnce(true); // no compilation error as method should return Promise<boolean>
+  it("should do something", async () => {
+    // repositoryMock.isInitialized.mockResolvedValueOnce('test'); // compilation error
+    // repositoryMock.isInitialized.mockResolvedValueOnce(1); // compilation error
+    repositoryMock.isInitialized.mockResolvedValueOnce(true); // no compilation error as method should return Promise<boolean>
 
-        const result = await service.doSomething();
+    const result = await service.doSomething();
 
-        expect(result).toBeTruthy();
-    });
+    expect(result).toBeTruthy();
+  });
 });

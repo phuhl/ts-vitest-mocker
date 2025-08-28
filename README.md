@@ -13,14 +13,14 @@ which simplifies classes and interfaces mocking.
 ## Table of Contents
 
 - [Getting started](#getting-started)
-    - [Mocking classes](#mocking-classes)
-    - [Mocking interfaces](#mocking-interfaces)
+  - [Mocking classes](#mocking-classes)
+  - [Mocking interfaces](#mocking-interfaces)
 - [More advanced example](#more-advanced-example)
 - [Configuring ts-vitest-mocker](#configuring-ts-vitest-mocker)
 - [Jest API compatibility](#jest-api-compatibility)
 - [Why to use ts-vitest-mocker](#why-to-use-ts-vitest-mocker)
 - [Notes](#notes)
-    - [ts-vitest-mocker with RxJS](#ts-vitest-mocker-with-rxjs)
+  - [ts-vitest-mocker with RxJS](#ts-vitest-mocker-with-rxjs)
 
 ---
 
@@ -35,33 +35,33 @@ npm install --save-dev ts-vitest-mocker
 ### Mocking classes
 
 ```typescript
-import { mock } from 'ts-vitest-mocker';
+import { mock } from "ts-vitest-mocker";
 
 const serviceMock = mock(YourService); // automatically mocks all methods
 
-serviceMock.yourMethod.mockReturnValue('Test');
+serviceMock.yourMethod.mockReturnValue("Test");
 ```
 
 ### Mocking interfaces
 
 ```typescript
-import { mock } from 'ts-vitest-mocker';
+import { mock } from "ts-vitest-mocker";
 
 const interfaceMock = mock<YourInterface>(); // automatically mocks all interface methods
 
-interfaceMock.yourMethod.mockReturnValue('Test');
+interfaceMock.yourMethod.mockReturnValue("Test");
 ```
 
 ### Using `Mock` type
 
 ```typescript
-import { Mock, mock } from 'ts-vitest-mocker';
+import { Mock, mock } from "ts-vitest-mocker";
 
 let serviceMock: Mock<YourService>;
 
 serviceMock = mock(YourService);
 
-serviceMock.yourMethod.mockReturnValue('Test');
+serviceMock.yourMethod.mockReturnValue("Test");
 ```
 
 ## More advanced example
@@ -73,37 +73,37 @@ This service has dependency to `UsersRepository` which is used to load users fro
 
 ```typescript title="users-repository.ts"
 export interface User {
-    name: string;
-    age: number;
+  name: string;
+  age: number;
 }
 
 export class UsersRepository {
-    getUsers(): Array<User> {
-        return [
-            {
-                name: 'User1',
-                age: 30,
-            },
-            {
-                name: 'User2',
-                age: 40,
-            },
-        ];
-    }
+  getUsers(): Array<User> {
+    return [
+      {
+        name: "User1",
+        age: 30,
+      },
+      {
+        name: "User2",
+        age: 40,
+      },
+    ];
+  }
 }
 ```
 
 `users-service.ts` file:
 
 ```typescript title="users-service.ts"
-import { User, UsersRepository } from './users-repository';
+import { User, UsersRepository } from "./users-repository";
 
 export class UsersService {
-    constructor(private readonly usersRepository: UsersRepository) {}
+  constructor(private readonly usersRepository: UsersRepository) {}
 
-    getUsers(): Array<User> {
-        return this.usersRepository.getUsers();
-    }
+  getUsers(): Array<User> {
+    return this.usersRepository.getUsers();
+  }
 }
 ```
 
@@ -114,33 +114,33 @@ automatically using `jest.fn()` internally and all type-checking will work out-o
 `users-service.test.ts` file:
 
 ```typescript title="users-service.test.ts"
-import { mock } from 'ts-vitest-mocker';
-import { UsersRepository } from './users-repository';
-import { UsersService } from './users-service';
+import { mock } from "ts-vitest-mocker";
+import { UsersRepository } from "./users-repository";
+import { UsersService } from "./users-service";
 
-describe('UsersService', () => {
-    it('should return all users', () => {
-        // GIVEN
-        const repositoryMock = mock(UsersRepository);
-        repositoryMock.getUsers.mockReturnValue([
-            {
-                name: 'Mocked user 1',
-                age: 40,
-            },
-        ]);
-        const service = new UsersService(repositoryMock);
+describe("UsersService", () => {
+  it("should return all users", () => {
+    // GIVEN
+    const repositoryMock = mock(UsersRepository);
+    repositoryMock.getUsers.mockReturnValue([
+      {
+        name: "Mocked user 1",
+        age: 40,
+      },
+    ]);
+    const service = new UsersService(repositoryMock);
 
-        // WHEN
-        const users = service.getUsers();
+    // WHEN
+    const users = service.getUsers();
 
-        // THEN
-        expect(users).toBeDefined();
-        expect(users.length).toBe(1);
-        expect(users[0]).toEqual({
-            name: 'Mocked user 1',
-            age: 40,
-        });
+    // THEN
+    expect(users).toBeDefined();
+    expect(users.length).toBe(1);
+    expect(users[0]).toEqual({
+      name: "Mocked user 1",
+      age: 40,
     });
+  });
 });
 ```
 
@@ -154,7 +154,7 @@ behavior only in case of specific tests cases (mocks);
 
 ```typescript
 mock(MyClass, {
-    // config values
+  // config values
 });
 ```
 
@@ -167,21 +167,21 @@ and specify it in [setupFiles array](https://jestjs.io/docs/configuration#setupf
 ##### ts-vitest-mocker.setup.ts
 
 ```typescript
-import { TsJestMocker } from 'ts-vitest-mocker';
+import { TsJestMocker } from "ts-vitest-mocker";
 
 TsJestMocker.setConfig({
-    failIfMockNotProvided: false,
+  failIfMockNotProvided: false,
 });
 ```
 
 ##### jest.config.ts
 
 ```typescript
-import type { Config } from 'jest';
+import type { Config } from "jest";
 
 const config: Config = {
-    verbose: true,
-    setupFiles: ['./ts-vitest-mocker.setup.ts'],
+  verbose: true,
+  setupFiles: ["./ts-vitest-mocker.setup.ts"],
 };
 
 export default config;
@@ -201,14 +201,14 @@ Examples:
 ```typescript
 // mock with local config
 const mock = mock(MyClass, {
-    excludeMethodNames: ['schedule', 'then'],
+  excludeMethodNames: ["schedule", "then"],
 });
 ```
 
 ```typescript
 // global config
 TsJestMocker.setConfig({
-    excludeMethodNames: ['schedule', 'then'],
+  excludeMethodNames: ["schedule", "then"],
 });
 ```
 
@@ -225,14 +225,14 @@ Examples:
 ```typescript
 // mock with local config
 const mock = mock({
-    includeMethodNames: ['then'], // "then" will be mocked even if it's by default (for interfaces) excluded
+  includeMethodNames: ["then"], // "then" will be mocked even if it's by default (for interfaces) excluded
 });
 ```
 
 ```typescript
 // global config
 TsJestMocker.setConfig({
-    includeMethodNames: ['then'],
+  includeMethodNames: ["then"],
 });
 ```
 
@@ -249,14 +249,14 @@ Examples:
 ```typescript
 // mock with local config
 const mock = mock({
-    failIfMockNotProvided: false,
+  failIfMockNotProvided: false,
 });
 ```
 
 ```typescript
 // global config
 TsJestMocker.setConfig({
-    failIfMockNotProvided: false,
+  failIfMockNotProvided: false,
 });
 ```
 
@@ -282,18 +282,18 @@ The above :point_up_2: sounds familiar to you? Stop doing that! ts-vitest-mocker
 
 ```typescript
 const mockUserRepository = {
-    yourMethod1: jest.fn(),
-    yourMethod2: jest.fn(),
-    yourMethod3: jest.fn(),
-    yourMethod4: jest.fn(),
-    yourMethod5: jest.fn(),
-    yourMethod6: jest.fn(),
+  yourMethod1: jest.fn(),
+  yourMethod2: jest.fn(),
+  yourMethod3: jest.fn(),
+  yourMethod4: jest.fn(),
+  yourMethod5: jest.fn(),
+  yourMethod6: jest.fn(),
 
-    // ...
+  // ...
 
-    // ❌️ you have to mock all the methods
-    // so mock and UsersRepository are compatible?
-    yourMethod20: jest.fn(),
+  // ❌️ you have to mock all the methods
+  // so mock and UsersRepository are compatible?
+  yourMethod20: jest.fn(),
 };
 
 const userService = new UserService(mockUserRepository);
@@ -301,8 +301,8 @@ const userService = new UserService(mockUserRepository);
 
 ```typescript
 const mockUserRepository = {
-    yourMethod1: jest.fn(),
-    yourMethod2: jest.fn(),
+  yourMethod1: jest.fn(),
+  yourMethod2: jest.fn(),
 } as any;
 // ❌ you mock only what you need and then cast explicitly to any
 // and loose benefits from compilation phase?
@@ -312,15 +312,15 @@ const userService = new UserService(mockUserRepository);
 
 ```typescript
 const mockUserRepository = {
-    yourMethod1: jest.fn(),
+  yourMethod1: jest.fn(),
 };
 
 // ❌️ You often skip specifying mock types like jest.fn<User, [User]>() and
 // then need to check over and over again in the code what actually
 // mocked methods should return?
 mockUserRepository.yourMethod1.mockReturnedValue({
-    name: 'User1',
-    age: 20,
+  name: "User1",
+  age: 20,
 });
 
 const userService = new UserService(mockUserRepository as any);
@@ -334,16 +334,16 @@ const userService = new UserService(mockUserRepository as any);
 const mockUserRepository = mock(UsersRepository);
 
 mockUserRepository.yourMethod1.mockReturnedValue({
-    name: 'User1',
-    age: 20,
+  name: "User1",
+  age: 20,
 }); // ✅ return type is automatically checked while compilation
 
 mockUserRepository.yourMethod1.mockReturnedValue({
-    name: 'User1',
+  name: "User1",
 }); // ❗ [compilation error] - you will catch incorrect types
 
 mockUserRepository.yourMethod1.mockReturnedValue({
-    age: 20,
+  age: 20,
 }); // ❗ [compilation error] - you will catch incorrect types
 
 // ❗ [compilation error] - you will catch incorrect types
@@ -365,7 +365,7 @@ operator internally checks if, so called, [Scheduler](https://rxjs.dev/guide/sch
 Example:
 
 ```typescript
-import { firstValueFrom, of } from 'rxjs';
+import { firstValueFrom, of } from "rxjs";
 
 const testMock = mock<YourInterface>();
 
@@ -381,10 +381,10 @@ This can be simply solved by excluding `schedule` methods from mocking.
 Example:
 
 ```typescript
-import { firstValueFrom, of } from 'rxjs';
+import { firstValueFrom, of } from "rxjs";
 
 const testMock = mock<YourInterface>({
-    excludeMethodNames: ['schedule'],
+  excludeMethodNames: ["schedule"],
 });
 
 const observable = of(testMock);

@@ -1,39 +1,39 @@
 export interface IRepository {
-    isInitialized(): Promise<boolean>;
+  isInitialized(): Promise<boolean>;
 
-    getString(): string;
+  getString(): string;
 
-    setString(str: string): void;
+  setString(str: string): void;
 
-    getBoolean(): boolean;
+  getBoolean(): boolean;
 
-    getNumberAsPromise(): Promise<number>;
+  getNumberAsPromise(): Promise<number>;
 }
 
 export class Repository implements IRepository {
-    private readonly logger: any;
-    public xyz: string;
+  private readonly logger: any;
+  public xyz: string;
 
-    constructor(private readonly name: string) {
-        this.logger = {};
-        this.xyz = 'xyz';
-    }
+  constructor(private readonly name: string) {
+    this.logger = {};
+    this.xyz = "xyz";
+  }
 
-    async isInitialized(): Promise<boolean> {
-        return true;
-    }
+  async isInitialized(): Promise<boolean> {
+    return true;
+  }
 
-    getBoolean(): boolean {
-        return false;
-    }
+  getBoolean(): boolean {
+    return false;
+  }
 
-    getNumberAsPromise(): Promise<number> {
-        return Promise.resolve(123);
-    }
+  getNumberAsPromise(): Promise<number> {
+    return Promise.resolve(123);
+  }
 
-    getString(): string {
-        return 'Test string';
-    }
+  getString(): string {
+    return "Test string";
+  }
 
-    setString(str: string): void {}
+  setString(str: string): void {}
 }

@@ -1,30 +1,30 @@
-import { mock } from '../lib';
+import { mock } from "../lib";
 
 interface SimpleInterface {
-    doSomething(): Promise<string>;
+  doSomething(): Promise<string>;
 }
 
 class SimpleService {
-    constructor(private readonly repository: SimpleInterface) {}
+  constructor(private readonly repository: SimpleInterface) {}
 
-    doSomething(): Promise<string> {
-        return this.repository.doSomething();
-    }
+  doSomething(): Promise<string> {
+    return this.repository.doSomething();
+  }
 }
 
-describe('Simple service', () => {
-    it('should ', async () => {
-        // GIVEN
-        const repository = mock<SimpleInterface>();
-        const service = new SimpleService(repository);
+describe("Simple service", () => {
+  it("should ", async () => {
+    // GIVEN
+    const repository = mock<SimpleInterface>();
+    const service = new SimpleService(repository);
 
-        repository.doSomething.mockResolvedValueOnce('mocked-value');
+    repository.doSomething.mockResolvedValueOnce("mocked-value");
 
-        // WHEN
-        const value = await service.doSomething();
+    // WHEN
+    const value = await service.doSomething();
 
-        // THEN
-        expect(repository.doSomething).toHaveBeenCalledTimes(1);
-        expect(value).toBe('mocked-value');
-    });
+    // THEN
+    expect(repository.doSomething).toHaveBeenCalledTimes(1);
+    expect(value).toBe("mocked-value");
+  });
 });
