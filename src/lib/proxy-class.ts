@@ -1,3 +1,4 @@
+import { vi } from "vitest";
 import { Class, Mock, MockConfig } from "./types";
 import { FunctionsFinder } from "./functions-finder";
 import { FunctionsFilter } from "./functions-filter";
@@ -26,7 +27,7 @@ export const createClassProxy = <T>(
         functions.has(property as string) &&
         !FunctionsFilter.shouldFilter(property as string, config)
       ) {
-        target[property] = vitest.fn();
+        target[property] = vi.fn();
 
         if (config.failIfMockNotProvided) {
           target[property].mockImplementation(() => {

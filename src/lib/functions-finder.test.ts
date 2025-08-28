@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 import { FunctionsFinder } from "./functions-finder";
 
 export class TestClass {

@@ -1,3 +1,4 @@
+import { vi } from "vitest";
 import { Mock, MockConfig } from "./types";
 import { FunctionsFilter } from "./functions-filter";
 import { MergedConfig } from "./config";
@@ -25,7 +26,7 @@ export const createGenericProxy = <T>(mockConfig?: MockConfig): Mock<T> => {
       }
 
       if (!FunctionsFilter.shouldFilter(property as string, config)) {
-        target[property] = vitest.fn();
+        target[property] = vi.fn();
 
         if (config.failIfMockNotProvided) {
           target[property].mockImplementation(() => {

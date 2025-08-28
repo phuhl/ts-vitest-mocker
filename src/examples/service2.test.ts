@@ -1,3 +1,4 @@
+import { describe, beforeEach, it, expect } from "vitest";
 import { mock, Mock } from "../lib";
 import { Repository } from "./app/repository";
 import { Service2 } from "./app/service2";

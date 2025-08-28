@@ -1,3 +1,4 @@
+import { describe, beforeEach, it, expect } from "vitest";
 import { TsVitestMocker } from "./config";
 import { mock } from "./index";
 

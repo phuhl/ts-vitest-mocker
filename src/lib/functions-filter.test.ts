@@ -1,3 +1,4 @@
+import { describe, beforeEach, it, expect } from "vitest";
 import { FunctionsFilter } from "./functions-filter";
 import { MergedConfig } from "./config";
 
