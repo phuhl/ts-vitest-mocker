@@ -1,6 +1,6 @@
 {
   "name": "ts-vitest-mocker",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Powerful, lightweight and TypeScript friendly library that extends Vitest with capability of mocking classes and interfaces.",
   "publishConfig": {
     "access": "public"
