@@ -29,9 +29,9 @@
   "author": "Dario Snajder, Philipp Uhl",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/dariosn85/ts-vitest-mocker/issues"
+    "url": "https://github.com/phuhl/ts-vitest-mocker/issues"
   },
-  "homepage": "https://github.com/dariosn85/ts-vitest-mocker#readme",
+  "homepage": "https://github.com/phuhl/ts-vitest-mocker#readme",
   "devDependencies": {
     "prettier": "^3.2.4",
     "rimraf": "^3.0.2",
